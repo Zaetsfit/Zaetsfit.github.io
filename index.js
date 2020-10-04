@@ -1,7 +1,3 @@
-// To Do 
-// 1) load to gitpages 
-
-
 const add_btn = document.getElementById('add_btn');
 const notes_list = document.getElementById('notes_list');
 const remove_btn = document.getElementById('remove_btn');
@@ -134,6 +130,11 @@ function renderNotes(param) {
         noteLi.setAttribute('id', note.getId());
         noteLi.appendChild(document.createTextNode(note.getTitle()));
         notes_list.insertBefore(noteLi, notes_list.firstChild);
+        if (note.getSelected()){
+            noteLi.setAttribute('class', 'active');
+        }else {
+            noteLi.setAttribute('class', '');
+        }
     })
     localStorage.setItem('notes', JSON.stringify(all_notes));
 
@@ -209,10 +210,8 @@ window.onclick = (event) => {
             if (notes_l[i].getId() == id) {
                 window.location.hash = create_url(notes_l[i].getTitle(), notes_l[i].getId())
                 note_text.value = notes_l[i].getContent();
-                const noteLi = document.getElementById(notes_l[i].getId());
                 notes_l[i].setSelected(true);
             }else {
-                const noteLi = document.getElementById(notes_l[i].getId());
                 notes_l[i].setSelected(false);
             }
 
@@ -250,7 +249,6 @@ remove_btn.onclick = () => {
 add_btn.onclick = () => {
     renderNotes('add');
     window.location.hash = '';
-    console.log(all_notes)
 }
 
 
